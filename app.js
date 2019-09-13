@@ -28,7 +28,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/version', (req, res) => {
-  res.json({ version: 3 });
+  res.json({ version: 4 });
 });
 
 //middleWare jwt
