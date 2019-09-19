@@ -1,0 +1,13 @@
+if query && query.operation != null
+    case query.operation
+        when 'deleted'
+        when 'updated'
+        when 'created'
+            #alert.alert.alert-success #{query.message}
+        when 'failed'
+            #alert.alert.alert-danger #{query.message}
+        
+    script.
+        setTimeout(() => {
+            document.getElementById("alert").style.display = 'none'
+        }, 2000)

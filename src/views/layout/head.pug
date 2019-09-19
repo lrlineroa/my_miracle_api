@@ -1,0 +1,32 @@
+doctype
+html(lang='')
+    head
+        meta(charset='utf-8')
+        meta(http-equiv='X-UA-Compatible' content='IE=edge')
+        meta(name='viewport' content='width=device-width, initial-scale=1')
+        //- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags
+        meta(name='description' content='MyM app')
+        meta(name='author' content='lrlineroa')
+        title
+        // HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries
+        // if lt IE 9
+        link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css')
+        link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css')
+        link(rel='stylesheet' href='stylesheets/style.css')
+        script(src='https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js')
+        script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
+    body
+        nav.navbar.navbar-expand-lg.navbar-light.bg-light.mb-0
+            a.navbar-brand(href='/') #{title}
+            ul.nav.justify-content-end
+                li.nav-item
+                    a.nav-link(href='/dailymessage') Mensaje Diario
+                li.nav-item
+                    a.nav-link(href='/recomendations') Recomendaciones
+                li.nav-item
+                    a.nav-link.disabled(href='#') Disabled
+    include ../includes/alerts
+    block content
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/umd/popper.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js')

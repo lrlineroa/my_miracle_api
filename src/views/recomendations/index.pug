@@ -1,0 +1,39 @@
+extends ../layout/head
+
+block content
+    .container.pt-5
+        .row
+            //  FORM 
+            .col-md-4
+                h2 Crear Recomendación
+                .card
+                    .card-body
+                        form(action='/recomendations' method='post')
+                            .form-group
+                                //- label(for='i1') Recomendación
+                                textarea.form-control#i1(name="recomendation", cols="30", rows="5" placeholder='Escribe aquí tu recomendación.' required)
+                            button.btn.btn-block.btn-primary(type='submit') Insertar
+            //TABLE 
+            .col-md-8
+                each recomendation in recomendations
+                    .card.mt-2.mb-2
+                        .card-body
+                            = recomendation.recomendation
+                        .card-body.font-italic.text-muted
+                            = moment(recomendation.createdAt).format('dddd, d {1} MMMM {1} YYYY').replace('{1}','de').replace('{1}','de')
+                //- table.table.table-bordered.table-hover
+                //-     thead
+                //-         tr
+                //-             th Category Name
+                //-             th Icon Name
+                //-             th Icon Type
+                //-             th Opciones
+                //-         tbody
+                //-     tr
+                //-         td  <%= cat.category_name %> 
+                //-         td  <%= cat.icon_name %> 
+                //-         td  <%= cat.icon_type %> 
+                //-         td
+                //-             a.btn.btn-danger(href='/categories/delete/<%=cat._id%>' data-confirmation='Estás seguro?') Delete
+                //-             a.btn.btn-info(href='/categories/edit/<%=cat._id%>') Edit
+                //-     tfoot     
