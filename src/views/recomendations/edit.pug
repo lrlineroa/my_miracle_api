@@ -1,0 +1,17 @@
+extends ../layout/head
+
+block content
+    .container.pt-5
+        .row
+            //  FORM 
+            .col-md-4.mx-auto.mt-15
+                h2 Actualizar Recomendación
+                .card
+                    .card-body
+                        form(action='/recomendations/edit/'+recomendation._id method='post')
+                            .form-group
+                                //- label(for='i1') Recomendación
+                                textarea.form-control#i1(name="recomendation",cols="30", rows="5" placeholder='Escribe aquí tu recomendación.' required)
+                                    = recomendation.recomendation
+                            button.btn.btn-block.btn-primary(type='submit') Actualizar
+            

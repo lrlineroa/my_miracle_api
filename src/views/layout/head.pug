@@ -19,14 +19,16 @@ html(lang='')
         nav.navbar.navbar-expand-lg.navbar-light.bg-light.mb-0
             a.navbar-brand(href='/') #{title}
             ul.nav.justify-content-end
-                li.nav-item
-                    a.nav-link(href='/dailymessage') Mensaje Diario
-                li.nav-item
-                    a.nav-link(href='/recomendations') Recomendaciones
-                li.nav-item
-                    a.nav-link.disabled(href='#') Disabled
+                if user    
+                    li.nav-item
+                        a.nav-link(href='/dailymessage') Mensaje Diario
+                    li.nav-item
+                        a.nav-link(href='/recomendations') Recomendaciones
+                    li.nav-item
+                        a.nav-link(href='/users/web/auth/signout') Cerrar Sesión
     include ../includes/alerts
     block content
     script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/umd/popper.min.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js')
+    script(src='https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js')

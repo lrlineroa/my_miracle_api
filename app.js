@@ -3,17 +3,19 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var mongoose=require('mongoose')
-var jwt=require('jsonwebtoken')
-var key=require('./src/routes/key')
-var User=require('./src/models/user')
+var mongoose = require('mongoose')
+var jwt = require('jsonwebtoken')
+var key = require('./src/routes/key')
+var User = require('./src/models/user')
 var indexRouter = require('./src/routes/index');
 var usersRouter = require('./src/routes/users');
 var recomendationsRouter = require('./src/routes/recomendations');
-var contactRouter= require('./src/routes/contact')
-
+var contactRouter = require('./src/routes/contact')
+var dailymessageRouter = require('./src/routes/dailymessage')
+var session = require('express-session')
+var MongoStore = require('connect-mongo')(session);
 var app = express();
-app.locals.moment=require('moment')
+app.locals.moment = require('moment')
 app.locals.moment.locale('es', {
   months: 'Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre'.split('_'),
   monthsShort: 'Enero._Feb._Mar_Abr._May_Jun_Jul._Ago_Sept._Oct._Nov._Dec.'.split('_'),
@@ -27,8 +29,18 @@ mongoose.connect(url, { useNewUrlParser: true })
   .then(db => console.log(' DB connected'))
   .catch(err => console.log(err.message))
 //con
+
+app.use(session({
+  secret: 'ella es lo que yo más quiero',
+  resave: true,
+  saveUninitialized: false,
+  store: new MongoStore({
+    mongooseConnection: mongoose.connection
+  })
+}))
 // view engine setup
-app.set('views', path.join(__dirname,'src', 'views'));
+
+app.set('views', path.join(__dirname, 'src', 'views'));
 app.set('view engine', 'pug');
 
 app.use(logger('dev'));
@@ -68,14 +80,15 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/recomendations', recomendationsRouter);
 app.use('/contact', contactRouter);
+app.use('/dailymessage', dailymessageRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

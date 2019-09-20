@@ -18,22 +18,13 @@ block content
                 each recomendation in recomendations
                     .card.mt-2.mb-2
                         .card-body
-                            = recomendation.recomendation
+                            span.float-right.ml-2
+                                a(href="/recomendations/delete/"+recomendation._id) 
+                                    ion-icon( style='font-size:20px' name='trash')
+                            span.float-right
+                                a(href="/recomendations/edit/"+recomendation._id) 
+                                    ion-icon( style='font-size:20px' name='create')  
+                            = recomendation.recomendation      
                         .card-body.font-italic.text-muted
                             = moment(recomendation.createdAt).format('dddd, D {1} MMMM {1} YYYY').replace('{1}','de').replace('{1}','de')
-                //- table.table.table-bordered.table-hover
-                //-     thead
-                //-         tr
-                //-             th Category Name
-                //-             th Icon Name
-                //-             th Icon Type
-                //-             th Opciones
-                //-         tbody
-                //-     tr
-                //-         td  <%= cat.category_name %> 
-                //-         td  <%= cat.icon_name %> 
-                //-         td  <%= cat.icon_type %> 
-                //-         td
-                //-             a.btn.btn-danger(href='/categories/delete/<%=cat._id%>' data-confirmation='Estás seguro?') Delete
-                //-             a.btn.btn-info(href='/categories/edit/<%=cat._id%>') Edit
-                //-     tfoot     
+                

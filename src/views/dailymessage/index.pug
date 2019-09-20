@@ -1,0 +1,31 @@
+extends ../layout/head
+
+block content
+    if user
+        .container.pt-5
+            .row
+                //  FORM 
+                .col-md-4
+                    h2 Crear mensaje diario
+                    .card
+                        .card-body
+                            form(action='/dailymessage' method='post')
+                                .form-group
+                                    textarea.form-control#i1(name="daily_message" cols="30" rows="5" placeholder='Escribe aquí tu mensaje diario.' required)
+                                button.btn.btn-block.btn-primary(type='submit') Insertar
+                //TABLE 
+                .col-md-8
+                    .card.mt-2.mb-2
+                        .card-body
+                            span.float-right.ml-2
+                                a(href="/dailymessage/delete/"+message._id) 
+                                    ion-icon( style='font-size:20px' name='trash')
+                            span.float-right
+                                a(href="/dailymessage/edit/"+message._id) 
+                                    ion-icon( style='font-size:20px' name='create')
+                            = message.daily_message
+                        .card-body.font-italic.text-muted
+                            = moment(message.createdAt).format('dddd, D {1} MMMM {1} YYYY').replace('{1}','de').replace('{1}','de')
+    else
+        .container
+            = 'No estás autenticado'

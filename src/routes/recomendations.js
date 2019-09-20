@@ -4,12 +4,18 @@ var Recomendation = require('../models/recomendation')
 var appConstants = require('../common/AppConstants')
 /* GET home page. */
 router.get('/', async function (req, res, next) {
-  let recomendations = await Recomendation.find().sort({'createdAt':-1});
-  res.render('recomendations/index', { title: 'My Miracle', query: req.query, recomendations });
+  let recomendations = await Recomendation.find().sort({ 'createdAt': -1 });
+  let user = req.session ? req.session.user : null
+  if(user){
+    res.render('recomendations/index', { title: 'My Miracle', query: req.query, recomendations, user });
+  }else{
+     res.redirect('/');
+  }
+  
 });
 //get api
 router.get('/api', async function (req, res, next) {
-  let recomendations = await Recomendation.find().sort({'createdAt':-1});
+  let recomendations = await Recomendation.find().sort({ 'createdAt': -1 });
   res.json(recomendations);
 });
 router.post('/', async (req, res) => {
@@ -25,6 +31,29 @@ router.post('/', async (req, res) => {
     }
   }
 
+});
+
+//delete
+//delete
+router.get('/delete/:id', async (req, res) => {
+  const {id} =req.params
+  await Recomendation.remove({_id:id});
+  res.redirect('/recomendations?operation=deleted&message=Recomendación eliminada satisfactoriamente');
+});
+
+
+//form to edit
+router.get('/edit/:id',async (req,res)=>{
+  const {id} =req.params
+  const recomendation=await Recomendation.findById(id);
+  res.render('recomendations/edit',{title: 'My Miracle', recomendation})
+});
+
+//update
+router.post('/edit/:id',async (req,res)=>{
+  const {id} =req.params
+  await Recomendation.updateOne({_id:id},req.body);
+  res.redirect('/recomendations?operation=updated&message=Recomendación actualizada satisfactoriamente')
 });
 
 module.exports = router;

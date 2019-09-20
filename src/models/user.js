@@ -6,6 +6,7 @@ var userSchema = new mongoose.Schema({
     email: {type:String,unique:true},
     phone_number:String,
     password: String,
+    admin: Boolean,
 },{timestamps:true})
 
 userSchema.pre('save', function (next) {
@@ -19,7 +20,9 @@ userSchema.pre('save', function (next) {
     next(err)
 })
 
-userSchema.methods.comparePassword=function(candidatePassword,next){    bcrypt.compare(candidatePassword,this.password,function(err,isMatch){
+userSchema.methods.comparePassword=function(candidatePassword,next){    
+    bcrypt.compare(candidatePassword,this.password,
+        function(err,isMatch){
         if(err) return next(err);
         next(null,isMatch)
     })

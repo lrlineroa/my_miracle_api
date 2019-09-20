@@ -2,6 +2,23 @@ extends layout/head
 
 block content
   .container.mt-5
-    h1= title
-  
+    if user
+      h1= 'Hola '+ user.name +', bienvenid@ a '+ title
+    else
+      .row.col-md-4.mx-auto
+        svg(height=46)
+          image(xlink:href='images/logo.svg') 
+      .row.mt-3
+        .col-md-4.mx-auto
+          h3.text-center Iniciar sesión
+          .card
+            .card-body
+              form(action='users/web/auth/signin' method='post')
+                .form-group
+                  label(for='i1') Correo Electrónico
+                  input.form-control#i1(name="email" placeholder='hola@hola.com' required)
+                .form-group
+                  label(for='i2') Contraseña
+                  input.form-control#i2(name="password" type='password' placeholder='**********' required)
+                button.btn.btn-block.btn-primary(type='submit') Ingresar
 
