@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Recomendation = require('../models/recomendation')
+var DailyMessage = require('../models/dailymessage')
 var appConstants = require('../common/AppConstants')
 /* GET home page. */
 router.get('/', async function (req, res, next) {
