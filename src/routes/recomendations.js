@@ -16,7 +16,9 @@ router.get('/', async function (req, res, next) {
 //get api
 router.get('/api', async function (req, res, next) {
   let recomendations = await Recomendation.find().sort({ 'createdAt': -1 });
-  res.json(recomendations);
+  let dailymessage = await DailyMessage.find().sort({'createdAt':-1});
+  let message=dailymessage[0]
+  res.json({recomendations,message});
 });
 router.post('/', async (req, res) => {
   let recomendation = new Recomendation(req.body);
