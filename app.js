@@ -10,6 +10,7 @@ var User=require('./src/models/user')
 var indexRouter = require('./src/routes/index');
 var usersRouter = require('./src/routes/users');
 var recomendationsRouter = require('./src/routes/recomendations');
+var contactRouter= require('./src/routes/contact')
 
 var app = express();
 app.locals.moment=require('moment')
@@ -66,6 +67,7 @@ app.use(function (req, res, next) {
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/recomendations', recomendationsRouter);
+app.use('/contact', contactRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
