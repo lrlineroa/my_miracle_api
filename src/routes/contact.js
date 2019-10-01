@@ -8,6 +8,11 @@ router.post('/mail/view', (req, res) => {
     data: req.body        
   })
 });
+router.get('/mail/view', (req, res) => {
+  res.render('mailers/consultation_mail', {
+    data: req.body        
+  })
+});
 router.post('/api', function (req, res, next) {
   var options = {
     uri: 'http://localhost:3000/contact/mail/view',

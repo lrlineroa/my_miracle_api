@@ -1,8 +1,12 @@
 extends ../layout/head
 
 block content
+    //- style
+    //-     | .jumbotron{
+    //-     |   background-color: #f00;  
+    //-     | }
     .container
-        .jumbotron 
+        .jumbotron(style='padding:10px ; background-color: #F1F3F4; border-radius:7px')
             h1 Datos de la consulta
             table
                 tr
@@ -20,4 +24,4 @@ block content
                         b Consulta
                     td
                         = data.consultation
-         
+
