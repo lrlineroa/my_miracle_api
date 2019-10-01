@@ -14,7 +14,9 @@ var contactRouter = require('./src/routes/contact')
 var dailymessageRouter = require('./src/routes/dailymessage')
 var session = require('express-session')
 var MongoStore = require('connect-mongo')(session);
+var bodyParser = require('body-parser');
 var app = express();
+
 app.locals.moment = require('moment')
 app.locals.moment.locale('es', {
   months: 'Enero_Febrero_Marzo_Abril_Mayo_Junio_Julio_Agosto_Septiembre_Octubre_Noviembre_Diciembre'.split('_'),
@@ -48,10 +50,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 app.get('/version', (req, res) => {
   res.json({ version: 6 });
 });
+
 
 //middleWare jwt
 app.use(function (req, res, next) {
@@ -73,7 +78,11 @@ app.use(function (req, res, next) {
     console.log(e.message)
     next()
   }
+
 })
+
+
+
 //middleWarejwt
 
 app.use('/', indexRouter);

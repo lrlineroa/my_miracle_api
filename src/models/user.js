@@ -7,6 +7,7 @@ var userSchema = new mongoose.Schema({
     phone_number:String,
     password: String,
     admin: Boolean,
+    push_token:String,
 },{timestamps:true})
 
 userSchema.pre('save', function (next) {

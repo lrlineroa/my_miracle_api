@@ -1,0 +1,23 @@
+extends ../layout/head
+
+block content
+    .container
+        .jumbotron 
+            h1 Datos de la consulta
+            table
+                tr
+                    td
+                        b Nombre
+                    td
+                        = data.name
+                tr
+                    td
+                        b Email
+                    td
+                        = data.email
+                tr
+                    td
+                        b Consulta
+                    td
+                        = data.consultation
+         

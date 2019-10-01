@@ -4,6 +4,7 @@ var User = require('../models/user')
 var key = require('./key')
 var jwt = require('jsonwebtoken')
 var axios = require('axios')
+var appConstats=require('../common/AppConstants')
 /* GET users listing. */
 router.get('/', function (req, res, next) {
   res.send('respond with a resource');
@@ -30,8 +31,10 @@ router.post('/api', async (req, res) => {
 //login //api
 router.post('/api/auth/signin', function (req, res) {
   User.findOne({ email: req.body.email }).then((user) => {
-    user.comparePassword(req.body.password, (err, isMatch) => {
+    user.comparePassword(req.body.password, async (err, isMatch) => {
       if (isMatch) {
+        user[appConstats.database.user.PUSH_TOKEN]=req.body[appConstats.database.user.PUSH_TOKEN]
+        await user.save();
         var token = jwt.sign({ userId: user.id }, key.tokenKey);
         res.status(200).json({
           user,
