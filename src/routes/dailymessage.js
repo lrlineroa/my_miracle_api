@@ -63,7 +63,9 @@ async function sendPushNotification(params) {
   let users = await User.find();
   let pushTokens = []
   for (user of users) {
-    pushTokens.push(user[appConstants.database.user.PUSH_TOKEN])
+    if (user[appConstants.database.user.PUSH_TOKEN]) {
+      pushTokens.push(user[appConstants.database.user.PUSH_TOKEN])
+    }
   }
   if (pushTokens.length > 0) {
     //   let headers = {
