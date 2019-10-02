@@ -23,7 +23,7 @@ router.post('/', async (req, res) => {
   sendPushNotification(req.body);
   try {
     //descomentar esto
-    //await dailymessage.save();
+    await dailymessage.save();
     res.redirect('/dailymessage?operation=created&message=Mensaje diario creado satisfactoriamente');
   } catch (error) {
     console.log(error)
