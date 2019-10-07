@@ -73,7 +73,7 @@ async function sendPushNotification(params) {
       subText: "My Miracle",
       title: "Hola tienes un",
       message: "Mensaje diario My Miracle",
-      bigText: 'Mensaje diario: '+message,
+      bigText: 'Mensaje diario: ' + message,
       color: "#3F81C5"
     }
     let body = {
@@ -86,25 +86,25 @@ async function sendPushNotification(params) {
       data: notification
     }
     let headers = {
-      'Authorization': "key=AIzaSyAuLiC4Nlxe4eUe79o5KWlo6uNjt47cxrU",
+      'Authorization': process.env.FCM_TOKEN || "token",
       'content-type': 'application/json',
     }
     let url = 'https://fcm.googleapis.com/fcm/send';
     axios(
       {
         url,
-        method:'post',
+        method: 'post',
         headers,
-        data:body
+        data: body
       }
     ).then(
-      (data)=>{
+      (data) => {
         console.log(data.data)
       }
-    ).catch(error=>{
+    ).catch(error => {
       console.log(error.response.statusText)
     })
-    
+
   }
 
 }
