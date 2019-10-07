@@ -4,7 +4,6 @@ var DailyMessage = require('../models/dailymessage')
 var appConstants = require('../common/AppConstants')
 var User = require('../models/user')
 var axios = require('axios')
-const { Expo } = require('expo-server-sdk')
 /* GET home page. */
 router.get('/', async function (req, res, next) {
   let dailymessage = await DailyMessage.find().sort({ 'createdAt': -1 });
@@ -67,67 +66,45 @@ async function sendPushNotification(params) {
       pushTokens.push(user[appConstants.database.user.PUSH_TOKEN])
     }
   }
+  console.log('pushTokens:')
+  console.log(pushTokens.length)
   if (pushTokens.length > 0) {
-    //   let headers = {
-    //     host: 'exp.host',
-    //     accept: 'application/json',
-    //     'accept-encoding': 'gzip, deflate',
-    //     'content-type': 'application/json',
-    //   }
-    //   let url='https://exp.host/--/api/v2/push/send';
-    //   let data={
-    //     "to": pushTokens[0],
-    //     "title":"Tienes un nuevo mensaje diario",
-    //     "body": message,
-    //   }
-    //   axios.post(url,data,headers).then(
-    //     (data)=>{
-    //       console.log(data.data)
-    //     }
-    //   )
-    let expo = new Expo();
-    let messages = [];
-    for (let pushToken of pushTokens) {
-      // Check that all your push tokens appear to be valid Expo push tokens
-      if (!Expo.isExpoPushToken(pushToken)) {
-        console.error(`Push token ${pushToken} is not a valid Expo push token`);
-        continue;
-      }
-      messages.push({
-        to: pushToken,
-        sound: 'default',
-        title: 'Mensaje diario',
-        body: message,
-      })
+    let notification = {
+      subText: "My Miracle",
+      title: "Hola tienes un",
+      message: "Mensaje diario My Miracle",
+      bigText: 'Mensaje diario: '+message,
+      color: "#3F81C5"
     }
+    let body = {
+      registration_ids: pushTokens,
+      time_to_live: 86400,
+      collapse_key: "test_type_b",
+      delay_while_idle: false,
 
-
-    // The Expo push notification service accepts batches of notifications so
-    // that you don't need to send 1000 requests to send 1000 notifications. We
-    // recommend you batch your notifications to reduce the number of requests
-    // and to compress them (notifications with similar content will get
-    // compressed).
-    let chunks = expo.chunkPushNotifications(messages);
-    let tickets = [];
-    (async () => {
-      // Send the chunks to the Expo push notification service. There are
-      // different strategies you could use. A simple one is to send one chunk at a
-      // time, which nicely spreads the load out over time:
-      for (let chunk of chunks) {
-        try {
-          let ticketChunk = await expo.sendPushNotificationsAsync(chunk);
-          console.log(ticketChunk);
-          tickets.push(...ticketChunk);
-          // NOTE: If a ticket contains an error code in ticket.details.error, you
-          // must handle it appropriately. The error codes are listed in the Expo
-          // documentation:
-          // https://docs.expo.io/versions/latest/guides/push-notifications#response-format
-        } catch (error) {
-          console.error(error);
-        }
+      notification: {},
+      data: notification
+    }
+    let headers = {
+      'Authorization': "key=AIzaSyAuLiC4Nlxe4eUe79o5KWlo6uNjt47cxrU",
+      'content-type': 'application/json',
+    }
+    let url = 'https://fcm.googleapis.com/fcm/send';
+    axios(
+      {
+        url,
+        method:'post',
+        headers,
+        data:body
       }
-    })();
-
+    ).then(
+      (data)=>{
+        console.log(data.data)
+      }
+    ).catch(error=>{
+      console.log(error.response.statusText)
+    })
+    
   }
 
 }
