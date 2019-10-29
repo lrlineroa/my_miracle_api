@@ -54,7 +54,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.get('/version', (req, res) => {
-  res.json({ version: 12 });
+  res.json({ version: 13 });
 });
 
 
